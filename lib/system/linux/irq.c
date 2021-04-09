@@ -136,10 +136,10 @@ static void *metal_linux_irq_handling(void *args)
 	param.sched_priority = sched_get_priority_max(SCHED_FIFO);
 	/* Ignore the set scheduler error */
 	ret = sched_setscheduler(0, SCHED_FIFO, &param);
-	if (ret) {
+	if (ret == -1) {
 		metal_log(METAL_LOG_WARNING,
 			  "%s: Failed to set scheduler: %s.\n", __func__,
-			  strerror(ret));
+			  strerror(errno));
 	}
 
 	while (1) {

@@ -51,8 +51,8 @@ static int metal_shmem_try_map(struct metal_page_size *ps, int fd, size_t size,
 
 	error = metal_mlock(mem, size);
 	if (error) {
-		metal_log(METAL_LOG_WARNING, "failed to mlock shmem - %s\n",
-			  strerror(-error));
+		metal_log(METAL_LOG_WARNING, "failed to mlock shmem - %d\n",
+			  error);
 	}
 
 	phys_size = sizeof(*phys) * pages;
@@ -109,6 +109,7 @@ int metal_shmem_open(const char *name, size_t size,
 
 	/* Iterate through page sizes in decreasing order. */
 	metal_for_each_page_size_down(ps) {
+		metal_log(METAL_LOG_WARNING, "trying page size 0x%x\r\n", ps->page_size);
 		if (ps->page_size > 2 * size)
 			continue;
 		error = metal_shmem_try_map(ps, fd, size, result);

@@ -228,6 +228,7 @@ int metal_map(int fd, off_t offset, size_t size, int expand, int flags,
 	}
 
 	mem = mmap(NULL, size, prot, flags, fd, offset);
+	metal_log(METAL_LOG_WARNING, "mem = %p, size = 0x%x, prot =0x%x, flags = 0x%x, fd = %d, offset = 0x%x\r\n", mem, size, prot, flags, fd, offset);
 	if (mem == MAP_FAILED)
 		return -errno;
 	*result = mem;

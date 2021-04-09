@@ -14,6 +14,7 @@
 #include <metal/shmem.h>
 #include <metal/sys.h>
 #include <metal/utilities.h>
+#include <stdio.h>
 
 int metal_shmem_register_generic(struct metal_generic_shmem *shmem)
 {
@@ -34,6 +35,7 @@ int metal_shmem_open_generic(const char *name, size_t size,
 	struct metal_generic_shmem *shmem;
 	struct metal_list *node;
 
+	printf("%s(%s, %lx, %p)\r\n",__FUNCTION__, name, size, result);
 	metal_list_for_each(&_metal.common.generic_shmem_list, node) {
 		shmem = metal_container_of(node, struct metal_generic_shmem, node);
 		if (strcmp(shmem->name, name) != 0)
